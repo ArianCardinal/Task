@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ثبت نام</title>
+	
+<script>
+  function myfnc1(idd){
+	  document.getElementById(idd).style.borderBottomColor='black';
+	  document.getElementById(idd).style.borderTopColor= 'grey';
+  }
+  function myfnc2(idd,idd2){
+	  document.getElementById(idd).style="section";
+	  if(idd=="name"|| idd=="lastname" || idd=="address"){
+	  if(document.getElementById(idd2).value.length!=0)
+		document.getElementById(idd+'c').style.backgroundColor='green';
+	  else document.getElementById(idd+'c').style.backgroundColor='white';
+	  }
+	  if(idd=="tel" || idd=="home"){
+		  if(document.getElementById(idd2).value.length==11 && !isNaN(document.getElementById(idd2).value))
+		  document.getElementById(idd+'c').style.backgroundColor='green';
+	      else document.getElementById(idd+'c').style.backgroundColor='white';
+	  }
+
+  }
+  
+ function my(){
+	  var n=0;
+	  if(document.getElementById("nameinp").value.length==0){
+		  document.getElementById("name").style.borderColor="red";
+		  ++n;
+	  }
+	   if(document.getElementById("lastnameinp").value.length==0){
+		   document.getElementById("lastname").style.borderColor="red";
+		   ++n;
+	   }
+	   if(document.getElementById("addressinp").value.length==0){
+		   document.getElementById("address").style.borderColor="red";
+		   ++n;
+	   }
+	   if(document.getElementById("telinp").value.length!=11){
+		   document.getElementById("tel").style.borderColor="red";
+		   alert("شماره تلفن باید 11 رقم باشد.");
+		   ++n;
+	   }
+	   if(document.getElementById("homeinp").value.length!=11){
+		   document.getElementById("home").style.borderColor="red";
+		   alert("شماره تلفن ثابت باید 11 رقم باشد.");
+		   ++n;
+	   }
+	 var radioo;
+	 
+	 if(document.getElementById("radio-one").checked==true)radioo="radio-one";
+	 else radioo="radio-two";
+	 if(n==0){
+	 let jsonn = JSON.stringify({
+	"region":1,
+	"address":document.getElementById("addressinp").value,
+	"lat":35.7717503,
+	"lng":51.3365315,
+	"coordinate_mobile":document.getElementById("telinp").value,
+	"coordinate_phone_number":document.getElementById("homeinp").value,
+	"first_name": document.getElementById("nameinp").value,
+	"last_name": document.getElementById("lastnameinp").value,
+	"gender":document.getElementById(radioo).value,
+	 });
+	 xhr= new XMLHttpRequest();
+     xhr.open("POST", "http://stage.achareh.ir/api/karfarmas/address",true);
+	 xhr.setRequestHeader('Content-Type', 'application/json');
+     xhr.setRequestHeader("Authorization",'Basic ' + btoa('09822222222:sana1234'));
+		 
+	 xhr.send(jsonn);
+		  xhr.onload = function() {
+		  window.location.replace("Page-2.html");
+		};
+		xhr.onerror = function() {
+		  alert("خطا در اتصال به اینترنت");
+		};
+	 }
+
+}
+
+</script>
+
+<style>
+	
+input[type="text"],input[type="tel"]{
+	 width: 70%;
+     padding: 15px;
+     direction: rtl;
+	 border-bottom: none;
+	 border-top: none;
+	 border-right: none;
+	 border-left: none;
+	 font-family:;
+	 font-size: 18px;
+}
+.section{
+  width: 70%;
+  margin: auto;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  direction: rtl;
+}
+.section[id="address"]{
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  direction: rtl;
+}
+.textp{
+	display: inline-block;
+	margin-right: 18px;
+	color: #0B6FB7;
+	font-size: 18px;
+}
+.textpp{
+display: inline-block;
+color: #0B6FB7;
+font-size: 18px;
+margin-right: 10px;
+}
+.pp{
+display: inline-block;
+color: #0B6FB7;
+font-size: 18px;
+margin-right: 10px;
+width: 70%;
+}
+.hd{
+ background-color: #D8D8D8;
+	color: #7E7979;
+    padding: 30px 20px;
+    margin: 14px auto auto auto;
+	width: 100%;
+}
+button {
+  width: 70%;
+  display: block;
+	margin: 20px auto auto auto;
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 4px;
+  font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'; 
+  font-size: 15px;
+}
+input:focus{
+  border-bottom:none;
+  border-bottom:none;
+  border-bottom:none;
+  border-bottom:none;
+  outline: none;
+}
+button:hover {
+  background-color: #45a049;
+}
+.switch-field {
+    display: inline-block;
+}
+
+.switch-field input {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.switch-field label {
+    background-color: #e4e4e4;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    line-height: 1;
+    text-align: center;
+    padding: 12px 25px;
+    margin-right: -1px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.1s ease-in-out;
+}
+
+.switch-field label:hover {
+    cursor: pointer;
+}
+
+.switch-field input:checked + label {
+    background-color: #4DAEE4;
+    box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+    border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+    border-radius: 0 4px 4px 0;
+}
+
+body{
+	font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif';
+	direction: rtl;
+}
+.dot{
+  height: 20px;
+  width: 20px;
+  margin:18px;
+  float: left;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  -webkit-appearance: none;
+  outline: none;
+}
+</style>
+	
+</head>
+	
+<body>
+<form></form>
+<div class="hd">
+	<h3>لطفا اطلاعات ورود خود را وارد نمایید.</h3>
+</div>
+	<div class="section" id="name"> <div class="textp" ><label>نام</label></div> <input type="text" id="nameinp" onFocus="myfnc1('name')" onfocusout="myfnc2('name','nameinp')"><input type="checkbox" class="dot" id="namec" disabled></div>
+	
+	<div class="section" id="lastname"> <div class="textp" ><label>نام خانوادگی</label></div> <input type="text" id="lastnameinp" onFocus="myfnc1('lastname')" onfocusout="myfnc2('lastname','lastnameinp')"><input type="checkbox" class="dot" id="lastnamec" disabled></div>
+	
+	<div class="section" id="tel"> <div class="textp" ><label>تلفن همراه</label></div> <input type="tel" id="telinp" onFocus="myfnc1('tel')" onfocusout="myfnc2('tel','telinp')"><input type="checkbox" class="dot" id="telc" disabled></div>
+	
+	<div class="section" id="home"> <div class="textp" ><label>تلفن ثابت</label></div> <input type="tel" id="homeinp" onFocus="myfnc1('home')" onfocusout="myfnc2('home','homeinp')"><input type="checkbox" class="dot" id="homec" disabled></div>
+	
+    <div class="hd"></div>
+	<div class="textpp" ><label>آدرس دقیق</label></div>
+	<div class="section" id="address">  <input type="text" id="addressinp" onFocus="myfnc1('address')" onfocusout="myfnc2('address','addressinp')"><input type="checkbox" class="dot" id="addressc" disabled></div>
+	 <p class="pp">جنسیت</p>
+	 <div class="switch-field">
+        <input type="radio" id="radio-one" name="switch-one" value="Male" checked/>
+        <label for="radio-one">آقا</label>
+        <input type="radio" id="radio-two" name="switch-one" value="Female" />
+        <label for="radio-two">خانم</label>
+    </div>
+	
+    <div class="hd" onClick="my()"><button>مرحله بعد</button></div>
+     
+	
+   
+</body>
+	
+</html>
